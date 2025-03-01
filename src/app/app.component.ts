@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'inventoryApp';
+  constructor(private router: Router) {}
+  isAuthPage(): boolean {
+    return this.router.url === '/login' || this.router.url === '/register' || this.router.url === '/' || this.router.url =='/auth/login' || this.router.url =='/auth/404';
+  }
 }

@@ -1,0 +1,53 @@
+<div class="flex items-center justify-between px-6 h-16 bg-white shadow-md fixed w-[84%] z-20">
+    <!-- Left: Search Box -->
+    <div class="relative flex items-center space-x-2 w-64">
+      <div class="relative" #searchContainer>
+        <div class="flex items-center space-x-2 cursor-pointer" (click)="expandSearch()" *ngIf="!isSearchExpanded">
+          <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="7"></circle>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"></path>
+          </svg>
+          <span class="text-gray-500">Search</span>
+        </div>
+  
+        <input type="text" placeholder="Search..."
+          class="absolute inset-0 opacity-0 transition-opacity w-64 bg-transparent focus:bg-white focus:opacity-100 focus:outline-none"
+          [class.opacity-100]="isSearchExpanded" (blur)="collapseSearch()">
+      </div>
+    </div>
+  
+    <!-- Right: Notification + Profile -->
+    <div class="flex items-center space-x-8">
+      <!-- Notification Icon -->
+      <button class="relative group">
+        <svg class="w-6 h-6 text-gray-500 group-hover:text-gray-700 transition" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0a3 3 0 01-6 0">
+          </path>
+        </svg>
+      </button>
+  
+      <!-- Profile Dropdown -->
+      <div class="relative">
+        <button (click)="toggleDropdown()" class="flex items-center space-x-2">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Profile"
+            class="w-8 h-8 rounded-full border border-gray-300">
+          <span class="font-semibold text-gray-700">Tom Cook</span>
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+  
+        <!-- Dropdown Menu -->
+        <div *ngIf="isDropdownOpen"
+          class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg overflow-hidden border border-gray-200">
+          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Your profile</a>
+          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

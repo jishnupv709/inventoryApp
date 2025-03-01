@@ -1,0 +1,44 @@
+<mat-tab-group>
+    <!-- Category Tab -->
+    <mat-tab label="Category">
+      <!-- Content for managing Items -->
+      <div class="p-4">
+        <h3 class="text-xl font-semibold">Manage cat</h3>
+        <!-- Insert your item form/component here -->
+        <ag-grid-angular
+        style="width: 100%; height: 500px;"
+        class="ag-theme-alpine"
+        [columnDefs]="columnDefs"
+        [rowData]="rowData"
+        [pagination]="true"
+        [paginationPageSize]="5">
+      </ag-grid-angular>
+     
+
+      </div>
+     
+    </mat-tab>
+  
+    <!-- Subcategory Tab -->
+    <mat-tab label="Subcategory">
+      <!-- Content for managing Items -->
+      <div class="p-4">
+        <h3 class="text-xl font-semibold">Manage sub</h3>
+        <!-- Insert your item form/component here -->
+        <!-- Example: <app-item-form></app-item-form> -->
+      </div>
+  
+      
+    </mat-tab>
+  
+    <!-- Item Tab -->
+    <mat-tab label="Item">
+      <!-- Content for managing Items -->
+      <div class="p-4">
+        <h3 class="text-xl font-semibold">Manage Items</h3>
+        <!-- Insert your item form/component here -->
+        <!-- Example: <app-item-form></app-item-form> -->
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  
