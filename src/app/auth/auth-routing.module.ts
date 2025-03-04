@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   // When users navigate to 'auth/login', show the LoginComponent.
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   
   // 404 Route for any auth paths that do not match.
   { path: '404', component: PageNotFoundComponent },

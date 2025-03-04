@@ -33,4 +33,11 @@ export class HeaderComponent implements OnInit {
       this.isSearchExpanded = false;
     }
   }
+
+
+  showNotifications = false;
+
+  toggleNotifications() {
+    this.showNotifications = !this.showNotifications;
+  }
 }

@@ -1,0 +1,31 @@
+.notification-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .notification-icon {
+    font-size: 32px; /* Make it responsive*/
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+  
+     &:hover { 
+      color: #1976d2; /* Change color on hover*/
+      transform: scale(1.1); /* Slightly enlarge*/
+    }
+  }
+  
+  .notification-panel {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 400px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

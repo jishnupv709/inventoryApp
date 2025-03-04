@@ -1,19 +1,18 @@
-<div *ngIf="!isAuthPage()" class="flex h-screen">
-  <!-- Sidebar -->
-  <app-sidebar class="w-64 bg-gray-900 text-white fixed h-full"></app-sidebar>
+<ng-container *ngIf="isAuthPage(); else mainLayout">
+  <router-outlet></router-outlet>
+</ng-container>
 
-  <!-- Main Content -->
-  <div class="flex flex-col flex-1 ml-64">
-    <!-- Header -->
-    <app-header class="h-16 bg-white shadow-md fixed w-full z-10"></app-header>
+<ng-template #mainLayout>
+  <div class="flex h-screen">
+    <app-sidebar class="w-64 bg-gray-900 text-white fixed h-full"></app-sidebar>
 
-    <!-- Page Content -->
-    <div class="mt-16 p-6">
-      <router-outlet></router-outlet>
+    <div class="flex flex-col flex-1 ml-64">
+      <app-header class="h-16 bg-white shadow-md fixed w-full z-10"></app-header>
+      <div class="mt-16 p-6">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
-</div>
-
-<div *ngIf="isAuthPage()" >
-  <router-outlet></router-outlet>
-</div>
+</ng-template>
+<!-- Modal -->
+<app-confirmation-pop></app-confirmation-pop>

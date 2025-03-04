@@ -1,0 +1,126 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-900">
+    <div class="bg-gray-800 p-8 rounded shadow-md w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-white text-center">Sign Up</h2>
+  
+      <form (ngSubmit)="onSignUp()" #signUpForm="ngForm">
+        <!-- NAME FIELD -->
+        <div class="mb-4">
+          <label for="name" class="block text-gray-300 mb-2">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="name"
+            required
+            #nameRef="ngModel"
+            class="w-full px-3 py-2 border border-gray-700 rounded bg-gray-900 text-white focus:outline-none focus:border-blue-500"
+            placeholder="Enter your full name"
+          />
+          <div *ngIf="nameRef.invalid && nameRef.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="nameRef.errors?.['required']">Name is required.</div>
+          </div>
+        </div>
+  
+        <!-- EMAIL FIELD -->
+        <div class="mb-4">
+          <label for="email" class="block text-gray-300 mb-2">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            email
+            #emailRef="ngModel"
+            class="w-full px-3 py-2 border border-gray-700 rounded bg-gray-900 text-white focus:outline-none focus:border-blue-500"
+            placeholder="Enter your email"
+          />
+          <div *ngIf="emailRef.invalid && emailRef.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="emailRef.errors?.['required']">Email is required.</div>
+            <div *ngIf="emailRef.errors?.['email']">Please enter a valid email address.</div>
+          </div>
+        </div>
+  
+        <!-- PHONE FIELD -->
+        <div class="mb-4">
+          <label for="phone" class="block text-gray-300 mb-2">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            [(ngModel)]="phone"
+            required
+            pattern="^[0-9]{10}$"
+            #phoneRef="ngModel"
+            class="w-full px-3 py-2 border border-gray-700 rounded bg-gray-900 text-white focus:outline-none focus:border-blue-500"
+            placeholder="Enter your phone number"
+          />
+          <div *ngIf="phoneRef.invalid && phoneRef.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="phoneRef.errors?.['required']">Phone number is required.</div>
+            <div *ngIf="phoneRef.errors?.['pattern']">Enter a valid 10-digit phone number.</div>
+          </div>
+        </div>
+  
+        <!-- PASSWORD FIELD -->
+        <div class="mb-4">
+          <label for="password" class="block text-gray-300 mb-2">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            minlength="6"
+            #passwordRef="ngModel"
+            class="w-full px-3 py-2 border border-gray-700 rounded bg-gray-900 text-white focus:outline-none focus:border-blue-500"
+            placeholder="Enter your password"
+          />
+          <div *ngIf="passwordRef.invalid && passwordRef.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="passwordRef.errors?.['required']">Password is required.</div>
+            <div *ngIf="passwordRef.errors?.['minlength']">
+              Password must be at least {{ passwordRef.errors?.['minlength'].requiredLength }} characters.
+            </div>
+          </div>
+        </div>
+  
+        <!-- CONFIRM PASSWORD FIELD -->
+        <div class="mb-6">
+          <label for="confirmPassword" class="block text-gray-300 mb-2">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            required
+            #confirmPasswordRef="ngModel"
+            class="w-full px-3 py-2 border border-gray-700 rounded bg-gray-900 text-white focus:outline-none focus:border-blue-500"
+            placeholder="Confirm your password"
+          />
+          <div *ngIf="confirmPasswordRef.invalid && confirmPasswordRef.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="confirmPasswordRef.errors?.['required']">Confirm password is required.</div>
+          </div>
+          <div *ngIf="password !== confirmPassword && confirmPasswordRef.touched" class="text-red-500 text-sm mt-1">
+            Passwords do not match.
+          </div>
+        </div>
+  
+        <!-- SUBMIT BUTTON -->
+        <button
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition-colors"
+          [disabled]="signUpForm.invalid"
+        >
+          Sign Up
+        </button>
+  
+        <!-- LOGIN LINK -->
+        <div class="mt-4 text-center">
+          <p class="text-gray-300">
+            Already have an account?
+            <a routerLink="/auth//login" class="text-blue-500 hover:underline">Sign in</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+  

@@ -17,6 +17,8 @@ export class SidebarComponent {
 
   navigateTo(route: string) {
     this.router.navigate([route]);
+    console.log('Navigation successful');
+  
   }
 
   @HostListener('document:click', ['$event'])

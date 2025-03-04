@@ -1,0 +1,92 @@
+<div class="p-4">
+    <!-- <mat-spinner></mat-spinner> -->
+    <div class="w-full h-12 flex justify-between items-center bg-white px-4 py-2 mb-4">
+      <!-- Left Side: Heading -->
+       <h3 class="text-xl font-semibold">
+{{ IsAdd ? 'Add Category' : IsEdit ? 'Edit Category' : 'Manage Category' }}
+</h3>
+  
+      <!-- Right Side: Buttons -->
+      <div *ngIf="!IsAdd && !IsEdit" class="flex space-x-3">
+          <!-- Add Button -->
+          <button matTooltip="Add New Category Item" 
+          matTooltipPosition="above"
+          matTooltipShowDelay="500"
+          matTooltipHideDelay="100"
+          class="bg-white text-gray-900 flex items-center justify-center px-3 py-2 rounded shadow-md hover:bg-gray-200 transition"
+          (click)="addToggle()">
+              <mat-icon>add_circle_outline</mat-icon>
+          </button>
+  
+          <!-- Download Button -->
+          <button matTooltip="Download Category Info" 
+          matTooltipPosition="above"
+          matTooltipShowDelay="500"
+          matTooltipHideDelay="100"
+          class="bg-white text-gray-900 flex items-center justify-center px-3 py-2 rounded shadow-md hover:bg-gray-200 transition">
+              <mat-icon>save_alt</mat-icon>
+          </button>
+      </div>
+  </div>
+  <div *ngIf="IsAdd || IsEdit" class="bg-white p-6 rounded-lg shadow-md w-full mx-auto">
+
+    <form>
+        <!-- First Row: Category Name, Size Unit, Size -->
+        <div class="grid grid-cols-3 gap-4 mb-4">
+            <div>
+                <label class="block text-gray-700 text-sm font-medium mb-1">Category Name</label>
+                <input type="text" [(ngModel)]="CategoryName" name="CategoryName" placeholder="Enter category name"
+                       class="w-full px-4 py-2 border rounded focus:ring focus:ring-blue-300 focus:outline-none shadow-sm">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 text-sm font-medium mb-1">Size Unit</label>
+                <input type="text" [(ngModel)]="SizeUnit" name="SizeUnit" placeholder="Enter size unit (e.g., meters, kg)"
+                       class="w-full px-4 py-2 border rounded focus:ring focus:ring-blue-300 focus:outline-none shadow-sm">
+            </div>
+
+            <div>
+                <label class="block text-gray-700 text-sm font-medium mb-1">Size</label>
+                <input type="number" [(ngModel)]="Size" name="Size" placeholder="Enter size"
+                       class="w-full px-4 py-2 border rounded focus:ring focus:ring-blue-300 focus:outline-none shadow-sm">
+            </div>
+        </div>
+
+        <!-- Second Row: Description -->
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-medium mb-1">Description</label>
+            <textarea [(ngModel)]="Description" name="Description" placeholder="Enter description" rows="3"
+                      class="w-full px-4 py-2 border rounded focus:ring focus:ring-blue-300 focus:outline-none shadow-sm"></textarea>
+        </div>
+
+        <!-- Third Row: Cancel & Submit Buttons -->
+        <div class="flex justify-end space-x-3">
+            <button type="button"
+                    (click)="CancelForm()" 
+                    class="px-4 py-2 bg-white border border-gray-400 text-gray-700 rounded shadow-md hover:bg-gray-100 transition">
+                Cancel
+            </button>
+
+            <button type="submit"
+                    class="px-4 py-2 bg-blue-600 text-white rounded shadow-md hover:bg-blue-700 transition">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+  
+    <ag-grid-angular *ngIf="!IsAdd && !IsEdit"
+    style="width: 100%; height: 500px;"
+    class="ag-theme-alpine"
+    [columnDefs]="columnDefs"
+    [rowData]="rowData"
+    [pagination]="true"
+    [paginationPageSize]="20"
+    [editType]="'fullRow'">
+  </ag-grid-angular>
+ 
+
+  </div>
+
+  
+  
