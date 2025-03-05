@@ -4,6 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ItemMasterComponent } from './inventory/item-master/item-master.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ManageJobsComponent } from './jobs/manage-jobs/manage-jobs.component';
+import { ApplyJobsComponent } from './jobs/apply-jobs/apply-jobs.component';
+import { MyJobsComponent } from './jobs/my-jobs/my-jobs.component';
+import { JobDetailsComponent } from './jobs/job-details/job-details.component';
+import { JobApplicationsComponent } from './jobs/job-applications/job-applications.component';
 
 
 const routes: Routes = [
@@ -13,6 +18,13 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'inventory-master', component: ItemMasterComponent },
   
+  { path: 'manage-jobs', component: ManageJobsComponent },
+  { path: 'apply-jobs', component: ApplyJobsComponent },
+  { path: 'my-jobs', component: MyJobsComponent },
+  { path: 'job-details', component: JobDetailsComponent },
+  { path: 'job-applications', component: JobApplicationsComponent },
+  
+
   // Lazy-load the AuthModule for all 'auth' routes
   { 
     path: 'auth', 

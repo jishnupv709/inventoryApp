@@ -1,0 +1,45 @@
+<!-- Full card occupying the entire component -->
+<div class="w-full h-[590px] bg-white px-16 py-12 shadow-lg rounded-lg flex flex-col relative">
+  
+    <!-- Back Button (Top-Right) -->
+    <button 
+    (click)="goBack()"
+    class="absolute top-4 right-4 flex items-center px-4 py-2 bg-white text-blue-600 border border-white rounded-lg shadow-md hover:shadow-lg hover:bg-blue-50 transition"
+  >
+  <mat-icon>arrow_back</mat-icon>
+   &nbsp; Back
+  </button>
+  
+
+  
+    <!-- Title -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-10 mt-10">{{ jobTitle }}</h1>
+  
+    <!-- Location -->
+    <div class="flex items-center text-gray-600 mb-10">
+      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 20a1 1 0 01-.894-.553l-4-8a1 1 0 011.788-.894L10 16.118l3.106-6.465a1 1 0 111.788.894l-4 8A1 1 0 0110 20z"/>
+      </svg>
+      <span class="text-base">{{ location }}</span>
+    </div>
+  
+    <!-- Description -->
+    <p class="text-gray-700 text-base leading-relaxed mb-12">
+      {{ description }}
+    </p>
+  
+    <!-- Posted On -->
+    <div class="text-gray-500 text-sm mb-10">
+      <span>Posted on: {{ postedOn | date: 'longDate' }}</span>
+    </div>
+  
+    <!-- "Apply Now" Button -->
+    <button
+      (click)="onApply()"
+      class="w-40 px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
+    >
+      Apply Now
+    </button>
+  
+  </div>
+  

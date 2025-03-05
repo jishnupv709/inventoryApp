@@ -26,6 +26,12 @@ import { ProfileComponent } from './profile/profile.component';
 import { CategoryComponent } from './inventory/category/category.component';
 import { RemoveActionRendererComponent } from './inventory/remove-action-renderer.component';
 import { ConfirmationPopComponent } from './confirmation-pop/confirmation-pop.component';
+import { ManageJobsComponent } from './jobs/manage-jobs/manage-jobs.component';
+import { ApplyJobsComponent } from './jobs/apply-jobs/apply-jobs.component';
+import { MyJobsComponent } from './jobs/my-jobs/my-jobs.component';
+import { JobDetailsComponent } from './jobs/job-details/job-details.component';
+import { JobApplicationsComponent } from './jobs/job-applications/job-applications.component';
+import { JobActionRendererComponent } from './jobs/apply-jobs/job-actionrenderer.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +46,12 @@ import { ConfirmationPopComponent } from './confirmation-pop/confirmation-pop.co
     CategoryComponent,
     RemoveActionRendererComponent,
     ConfirmationPopComponent,
+    ManageJobsComponent,
+    ApplyJobsComponent,
+    MyJobsComponent,
+    JobDetailsComponent,
+    JobApplicationsComponent,
+    JobActionRendererComponent,
 
   ],
   imports: [

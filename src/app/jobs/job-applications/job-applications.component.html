@@ -1,0 +1,25 @@
+<div class="p-4">
+    <!-- <mat-spinner></mat-spinner> -->
+    <div class="w-full h-12 flex justify-between items-center bg-white px-4 py-2 mb-4">
+      <!-- Left Side: Heading -->
+       <h3 class="text-xl font-semibold">
+Job Applications
+</h3>
+       
+  </div>
+  
+    <ag-grid-angular 
+    style="width: 100%; height: 500px;"
+    class="ag-theme-alpine"
+    [columnDefs]="columnDefs"
+    [rowData]="rowData"
+    [pagination]="true"
+    [paginationPageSize]="20"
+    [editType]="'fullRow'">
+  </ag-grid-angular>
+ 
+
+  </div>
+
+  
+  
