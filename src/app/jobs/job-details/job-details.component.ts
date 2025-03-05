@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService } from 'src/app/confirmation-pop/confirmation.service';
 
 @Component({
   selector: 'app-job-details',
@@ -16,7 +17,8 @@ export class JobDetailsComponent implements OnInit {
   postedOn: Date = new Date('2025-02-25T10:00:00');
 
   constructor(private route: ActivatedRoute,
-      private router: Router,) {}
+      private router: Router,
+      private confirmationService: ConfirmationService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -28,6 +30,20 @@ export class JobDetailsComponent implements OnInit {
   onApply(): void {
     console.log('Apply clicked for job:', this.jobId);
     // Navigate or open application form
+    this.confirmationService.showConfirmation({
+      confType: 'info',
+      confHeader: 'Job Application Submisssion',
+      confBody: 'Are you sure you want to apply for this job?',
+      confCancel: 'Cancel',
+      confSubmit: 'Submit'
+    }).subscribe((confirmed) => {
+      if (confirmed) {
+        // Perform category deletion logic here
+        console.log('Category deleted');
+      } else {
+        console.log('Delete action cancelled');
+      }
+    });
   }
 
   goBack() {

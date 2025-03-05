@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface ConfirmationDialogData {
-  confType: 'success' | 'warn';
+  confType: 'success' | 'warn' | "info";
   confHeader: string;
   confBody: string;
   confCancel: string;
