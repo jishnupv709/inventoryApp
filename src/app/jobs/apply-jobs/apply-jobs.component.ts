@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
+import { CommonService } from 'src/app/common.service';
 import { Router } from '@angular/router';
 import { ColDef } from 'ag-grid-community';
 import { JobActionRendererComponent } from './job-actionrenderer.component';
@@ -13,7 +13,7 @@ import { ConfirmationService } from 'src/app/confirmation-pop/confirmation.servi
 export class ApplyJobsComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
+    private commonService: CommonService,
     private router: Router,
     private confirmationService: ConfirmationService
   ) { }

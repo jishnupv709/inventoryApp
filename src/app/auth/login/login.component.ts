@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { CommonService } from 'src/app/common.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private commonService: CommonService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       email: this.email,
       password:this.password
     }
-    this.authService.postData('/auth/login', data).subscribe(
+    this.commonService.login('/auth/login', data).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.token);
         this.router.navigate(['/dashboard']);
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 //       email: this.email,
 //       password:this.password
 //     }
-//     this.authService.postData('/auth/login',data).subscribe((res:any)=>{
+//     this.commonService.postData('/auth/login',data).subscribe((res:any)=>{
 //       console.log(res)
 //     })
 // }

@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './auth/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -61,6 +63,12 @@ import { JobActionRendererComponent } from './jobs/apply-jobs/job-actionrenderer
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      timeOut: 3000, // Auto close after 3s
+      progressBar: true,
+      // preventDuplicates: true
+    }),
     MatTabsModule,
     MatSlideToggleModule,
     MatIconModule,
@@ -70,7 +78,8 @@ import { JobActionRendererComponent } from './jobs/apply-jobs/job-actionrenderer
     MatProgressSpinnerModule,
     AgGridModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

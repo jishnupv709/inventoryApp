@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
+import { CommonService } from 'src/app/common.service';
 import { Router } from '@angular/router';
-import { ColDef } from 'ag-grid-community';
+import { ColDef,ValueFormatterParams } from 'ag-grid-community';
 import { ToggleRendererComponent } from 'src/app/inventory/toggle-renderer.component';
 import { EditActionRendererComponent } from 'src/app/inventory/edit-action-renderer.component';
 import { RemoveActionRendererComponent } from 'src/app/inventory/remove-action-renderer.component';
 import { ConfirmationService } from 'src/app/confirmation-pop/confirmation.service';
+import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-manage-jobs',
@@ -15,12 +17,14 @@ import { ConfirmationService } from 'src/app/confirmation-pop/confirmation.servi
 export class ManageJobsComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
+    private commonService: CommonService,
     private router: Router,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
+    this.getJobs();
   }
 
   // Define column definitions using the ColDef type for better IntelliSense.
@@ -30,38 +34,98 @@ export class ManageJobsComponent implements OnInit {
         onEdit: this.onEditAction.bind(this), // Pass the method reference
       },
      },
-    { headerName: 'Job Name', field: 'JobTittle', sortable: true, filter: true ,width:200,maxWidth:230 },
-    { headerName: 'Location', field: 'Location', sortable: true, filter: true },
-    { headerName: 'Description', field: 'description', sortable: true, filter: true, flex: 1 },
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:200 },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true },
+    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:300,},
+    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:200 ,
+      valueFormatter: (params: ValueFormatterParams): string =>
+        new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
+    },
     { headerName: 'Remove', field: 'Remove', cellRendererFramework: RemoveActionRendererComponent, width: 90,
       cellRendererParams: {
         onDelete: this.onDeleteAction.bind(this), // Pass the method reference
       },
+      flex: 1
      },
   ];
-
-  // Define some dummy row data.
-  rowData = Array.from({ length: 60 }, (_, i) => ({
-    no: i + 1,
-    JobTittle: `Item 1876887669${i + 1}`,
-    Location: "Kochi",
-    description: `Description for Item ${i + 1}`,
-    enabled: false // Default to false (disabled)
-  }));
-  
-  
-  onToggleChange(event: any, rowIndex: number) {
-    this.rowData[rowIndex].enabled = event.checked;
-    console.log(`Row ${rowIndex + 1} enabled: ${event.checked}`);
+  rowData:any=[];
+  getJobs(){
+    this.loading=true;
+    this.commonService.getData('/jobs').subscribe({
+      next: (response: any) => {
+        console.log("data , ",response)
+          this.rowData = response;
+          this.loading=false;
+      },
+      error: (error) => {
+        console.error('Error fetching data:', error);
+        this.loading=false;
+      }
+    });
   }
+
+  loading:boolean=false;
+  SubmitForm() {
+    this.loading=true;
+    console.log('Form submitted:', this.JobTitle, this.Location, this.Description);
+    if(this.IsAdd){//Add a new job
+      let data={
+        jobTitle:this.JobTitle, 
+        location:this.Location,
+        description:this.Description
+      }
+      this.commonService.postData('/jobs', data).subscribe({
+        next: (response: any) => {
+          if (response?.status === 201) {
+            this.toastr.success('The Job Created Successfully', 'Success');
+            this.CancelForm();
+            this.IsAdd=false;
+          } 
+          this.loading=false;
+        },
+        error: (error) => {
+          this.toastr.error(error?.message || 'Something went wrong!', 'Error');
+          this.loading=false;
+        }
+        
+      });
+      
+    }
+    if(this.IsEdit){//Edit a job
+      let data={
+        jobId:this.jobId, 
+        jobTitle:this.JobTitle, 
+        location:this.Location,
+        description:this.Description
+      }
+      this.commonService.putData('/jobs/update', data).subscribe({
+        next: (response: any) => {
+          if (response?.status === 200) {
+            this.toastr.success('The Job Updated Successfully', 'Success');
+            this.CancelForm();
+            this.getJobs();
+            this.IsEdit=false;
+          } 
+          this.loading=false;
+        },
+        error: (error) => {
+          this.toastr.error(error?.message || 'Something went wrong!', 'Error');
+          this.loading=false;
+        }
+      
+      });
+    // this.IsEdit=false;
+  }
+}
   
   
-  JobTittle:any;Location:any;Description:any;
+  jobId:any;JobTitle:any;Location:any;Description:any;errorMessage: string = '';
   onEditAction(rowData: any) {
     this.IsEdit=true; 
-    this.JobTittle=rowData.JobTittle;
-    this.Location=rowData.Location;
+    this.JobTitle=rowData.jobTitle;
+    this.Location=rowData.location;
     this.Description=rowData.description;
+    this.jobId=rowData._id;
     console.log('Edit action received in parent:', rowData);
     console.log('Edit action received in parent:this.IsEdit', this.IsEdit);
     // Handle the received row data (e.g., open a modal, update a form, etc.)
@@ -74,7 +138,7 @@ export class ManageJobsComponent implements OnInit {
   CancelForm(){
     this.IsAdd=false;
     this.IsEdit=false;
-    this.JobTittle=null;
+    this.JobTitle=null;
     this.Location=null;
     this.Description=null;
   }
