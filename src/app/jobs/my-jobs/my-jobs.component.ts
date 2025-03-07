@@ -24,13 +24,13 @@ export class MyJobsComponent implements OnInit {
 
   // Define column definitions using the ColDef type for better IntelliSense.
   columnDefs: ColDef[] = [
-    { headerName: 'No', sortable: true, filter: true,width:100,
+    { headerName: 'No', sortable: true, filter: true,width:80,
     valueGetter: (params) => ((params.node?.rowIndex ?? 0) + 1).toString(),
    },
-    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:250 },
-    { headerName: 'Location', field: 'location', sortable: true, filter: true,width:200 },
-    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:350},
-    { headerName: 'Applied On ', field: 'createdOn', sortable: true, filter: true,width:200 ,
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:150 },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true,width:150 },
+    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:200},
+    { headerName: 'Applied On ', field: 'createdOn', sortable: true, filter: true,width:150 ,
           valueFormatter: (params: ValueFormatterParams): string =>
             new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
     },

@@ -29,19 +29,19 @@ export class ManageJobsComponent implements OnInit {
 
   // Define column definitions using the ColDef type for better IntelliSense.
   columnDefs: ColDef[] = [
-    { headerName: 'Edit', field: 'edit', cellRendererFramework: EditActionRendererComponent, width: 100,
+    { headerName: 'Edit', field: 'edit', cellRendererFramework: EditActionRendererComponent, width: 80,
       cellRendererParams: {
         onEdit: this.onEditAction.bind(this), // Pass the method reference
       },
      },
-    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:200 },
-    { headerName: 'Location', field: 'location', sortable: true, filter: true ,width:200 },
-    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:300,},
-    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:200 ,
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:150 },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true ,width:150 },
+    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:200,},
+    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:150 ,
       valueFormatter: (params: ValueFormatterParams): string =>
         new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
     },
-    { headerName: 'Remove', field: 'Remove', cellRendererFramework: RemoveActionRendererComponent, width: 130,
+    { headerName: 'Remove', field: 'Remove', cellRendererFramework: RemoveActionRendererComponent, width: 80,
       cellRendererParams: {
         onDelete: this.onDeleteAction.bind(this), // Pass the method reference
       },

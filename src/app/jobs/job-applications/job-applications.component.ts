@@ -24,13 +24,13 @@ export class JobApplicationsComponent implements OnInit {
 
   // Define column definitions using the ColDef type for better IntelliSense.
   columnDefs: ColDef[] = [
-    { headerName: 'No', sortable: true, filter: true,width:60,
+    { headerName: 'No', sortable: true, filter: true,width:70,
     valueGetter: (params) => ((params.node?.rowIndex ?? 0) + 1).toString(),
    },
-    { headerName: 'Applicant Name', field: 'username', sortable: true, filter: true,width:180},
-    { headerName: 'Email', field: 'email', sortable: true, filter: true,},
-    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:200 },
-    { headerName: 'Location', field: 'location', sortable: true, filter: true,width:180 },
+    { headerName: 'Applicant Name', field: 'username', sortable: true, filter: true,width:150},
+    { headerName: 'Email', field: 'email', sortable: true, filter: true,width:150},
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:180 },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true,width:150 },
     // { headerName: 'Description', field: 'description', sortable: true, filter: true,width:200},
     { headerName: 'Applied On ', field: 'appliedOn', sortable: true, filter: true,width:160 ,
               valueFormatter: (params: ValueFormatterParams): string =>

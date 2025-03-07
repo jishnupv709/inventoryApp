@@ -26,19 +26,20 @@ export class ApplyJobsComponent implements OnInit {
 
   // Define column definitions using the ColDef type for better IntelliSense.
   columnDefs: ColDef[] = [
-    { headerName: 'No', sortable: true, filter: true,width:80,
+    { headerName: 'No', sortable: true, filter: true,width:70,
       valueGetter: (params) => ((params.node?.rowIndex ?? 0) + 1).toString(),
      },
-    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:200 },
-    { headerName: 'Location', field: 'location', sortable: true, filter: true },
-    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:300, },
-    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:180 ,
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:150 },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true ,width:150},
+    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:200, },
+    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:150 ,
         valueFormatter: (params: ValueFormatterParams): string =>
            new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
       },
     {
       headerName: 'Apply',
       field: 'Apply',
+      width:150,
       cellRendererFramework: JobActionRendererComponent,
       cellRendererParams: {
         onApply: this.onApplyAction.bind(this), // Pass method reference
