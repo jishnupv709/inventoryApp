@@ -29,6 +29,7 @@ loading:boolean=false;
     this.commonService.login('/auth/login', data).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userData', JSON.stringify(response));
         this.loading=false;
         this.router.navigate(['/dashboard']);
       },

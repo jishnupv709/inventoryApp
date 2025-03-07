@@ -34,10 +34,10 @@ export class ManageJobsComponent implements OnInit {
         onEdit: this.onEditAction.bind(this), // Pass the method reference
       },
      },
-    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:180 },
-    { headerName: 'Location', field: 'location', sortable: true, filter: true ,width:150 },
-    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:200,},
-    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:170 ,
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:200 },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true ,width:200 },
+    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:350,},
+    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:200 ,
       valueFormatter: (params: ValueFormatterParams): string =>
         new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
     },
@@ -65,6 +65,10 @@ export class ManageJobsComponent implements OnInit {
 
   loading:boolean=false;
   SubmitForm() {
+    if(!this.JobTitle || !this.Location  || !this.Description) {
+      this.toastr.warning("Enter all the fields","Warning");
+      return;
+    }
     this.loading=true;
     console.log('Form submitted:', this.JobTitle, this.Location, this.Description);
     if(this.IsAdd){//Add a new job
@@ -78,6 +82,7 @@ export class ManageJobsComponent implements OnInit {
           if (response?.status === 201) {
             this.toastr.success('The Job Created Successfully', 'Success');
             this.CancelForm();
+            this.getJobs();
             this.IsAdd=false;
           } 
           this.loading=false;
@@ -99,7 +104,7 @@ export class ManageJobsComponent implements OnInit {
       }
       this.commonService.putData('/jobs/update', data).subscribe({
         next: (response: any) => {
-          if (response?.status === 200) {
+          if (response?.status === 200 || response?.status === 201) {
             this.toastr.success('The Job Updated Successfully', 'Success');
             this.CancelForm();
             this.getJobs();

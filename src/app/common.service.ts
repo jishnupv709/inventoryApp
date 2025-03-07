@@ -16,6 +16,10 @@ export class CommonService {
       .pipe(catchError(this.handleError));
   }
 
+  register(url: string, data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}${url}`, data, { observe: 'response' })
+      .pipe(catchError(this.handleError));
+  }
   postData(url: string, data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}${url}`, data, { observe: 'response' })
       .pipe(catchError(this.handleError));

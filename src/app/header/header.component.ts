@@ -9,10 +9,14 @@ export class HeaderComponent implements OnInit {
 
   isDropdownOpen = false;
   isSearchExpanded = false;
+  UserData: any=[];
 
   constructor(private eRef: ElementRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const storedData = localStorage.getItem('userData');
+    this.UserData = storedData ? JSON.parse(storedData) : null;    
+  }
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;

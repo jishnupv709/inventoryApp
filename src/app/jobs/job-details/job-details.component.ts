@@ -36,7 +36,7 @@ export class JobDetailsComponent implements OnInit {
         this.jobId=response.body._id;
         this.jobTitle=response.body.jobTitle;
         this.location=response.body.location;
-        this.description=response.body.location;
+        this.description=response.body.description;
         this.postedOn=new Date(response.body.createdOn)
           this.loading=false;
       },
