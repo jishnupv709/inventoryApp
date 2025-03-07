@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/common.service';
 import { Router } from '@angular/router';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { JobActionRendererComponent } from './job-actionrenderer.component';
 import { ConfirmationService } from 'src/app/confirmation-pop/confirmation.service';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-apply-jobs',
@@ -19,14 +21,21 @@ export class ApplyJobsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getJobs();
   }
 
   // Define column definitions using the ColDef type for better IntelliSense.
   columnDefs: ColDef[] = [
-    { headerName: 'No', field: 'no', sortable: true, filter: true,width:100 },
-    { headerName: 'Job Name', field: 'JobTittle', sortable: true, filter: true ,width:200,maxWidth:230 },
-    { headerName: 'Location', field: 'Location', sortable: true, filter: true },
-    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:350,maxWidth:430 },
+    { headerName: 'No', sortable: true, filter: true,width:80,
+      valueGetter: (params) => ((params.node?.rowIndex ?? 0) + 1).toString(),
+     },
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:200 },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true },
+    { headerName: 'Description', field: 'description', sortable: true, filter: true,width:300, },
+    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:180 ,
+        valueFormatter: (params: ValueFormatterParams): string =>
+           new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
+      },
     {
       headerName: 'Apply',
       field: 'Apply',
@@ -34,24 +43,32 @@ export class ApplyJobsComponent implements OnInit {
       cellRendererParams: {
         onApply: this.onApplyAction.bind(this), // Pass method reference
       },
-      flex:1
     }
     
     
   ];
 
-  // Define some dummy row data.
-  rowData = Array.from({ length: 60 }, (_, i) => ({
-    no: i + 1,
-    JobTittle: `Item 1876887669${i + 1}`,
-    Location: "Kochi",
-    description: `Description for Item ${i + 1}`,
-    enabled: false // Default to false (disabled)
-  }));
+  
+  rowData:any=[];loading:boolean=false;
+  getJobs(){
+    this.loading=true;
+    this.commonService.getData('/jobs/new').subscribe({
+      next: (response: any) => {
+        console.log("data , ",response)
+          this.rowData = response;
+          this.loading=false;
+      },
+      error: (error) => {
+        console.error('Error fetching data:', error);
+        this.loading=false;
+      }
+    });
+  }
+
   
   onApplyAction(rowData: any) {
-    console.log("rowdata", rowData.no);
-    this.router.navigate(['/job-details'], { queryParams: { id: rowData.no } });
+    console.log("rowdata", rowData);
+    this.router.navigate(['/job-details'], { queryParams: { id: rowData._id } });
 }
 
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 export interface ConfirmationDialogData {
-  confType: 'success' | 'warn' | "info";
+  confType: 'success' | 'warn' | 'info';
   confHeader: string;
   confBody: string;
   confCancel: string;
@@ -15,9 +15,14 @@ export interface ConfirmationDialogData {
 export class ConfirmationService {
   private isVisible = new BehaviorSubject<boolean>(false);
   private confirmationData = new BehaviorSubject<ConfirmationDialogData | null>(null);
-  private confirmationResponse = new BehaviorSubject<boolean | null>(null);
+  
+  // We'll create a new Subject for each confirmation call.
+  private confirmationResponse!: Subject<boolean>;
 
-  showConfirmation(dialogData: ConfirmationDialogData): Observable<boolean | null> {
+  // Call this method to open the confirmation dialog.
+  showConfirmation(dialogData: ConfirmationDialogData): Observable<boolean> {
+    // Create a new subject for this confirmation
+    this.confirmationResponse = new Subject<boolean>();
     this.confirmationData.next(dialogData);
     this.isVisible.next(true);
     return this.confirmationResponse.asObservable();
@@ -25,11 +30,13 @@ export class ConfirmationService {
 
   confirm(): void {
     this.confirmationResponse.next(true);
+    this.confirmationResponse.complete();
     this.close();
   }
 
   cancel(): void {
     this.confirmationResponse.next(false);
+    this.confirmationResponse.complete();
     this.close();
   }
 

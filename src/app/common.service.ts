@@ -31,8 +31,8 @@ export class CommonService {
       .pipe(catchError(this.handleError));
   }
 
-  deleteData(url: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}${url}`)
+  deleteData(url: string, data: any): Observable<any> {
+    return this.http.request('delete', `${this.apiUrl}${url}`, { body: data, observe: 'response' })
       .pipe(catchError(this.handleError));
   }
 

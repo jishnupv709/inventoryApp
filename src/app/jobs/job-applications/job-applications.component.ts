@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/common.service';
 import { Router } from '@angular/router';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { ConfirmationService } from 'src/app/confirmation-pop/confirmation.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-job-applications',
@@ -18,31 +19,45 @@ export class JobApplicationsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getApplications();
   }
 
   // Define column definitions using the ColDef type for better IntelliSense.
   columnDefs: ColDef[] = [
-    { headerName: 'No', field: 'no', sortable: true, filter: true,width:100 },
-    { headerName: 'Applicant Name', field: 'AppliedUser', sortable: true, filter: true,},
-    { headerName: 'Email', field: 'Email', sortable: true, filter: true,},
-    { headerName: 'Job Name', field: 'JobTittle', sortable: true, filter: true , },
-    { headerName: 'Location', field: 'Location', sortable: true, filter: true },
+    { headerName: 'No', sortable: true, filter: true,width:60,
+    valueGetter: (params) => ((params.node?.rowIndex ?? 0) + 1).toString(),
+   },
+    { headerName: 'Applicant Name', field: 'username', sortable: true, filter: true,width:180},
+    { headerName: 'Email', field: 'email', sortable: true, filter: true,},
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:200 },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true,width:180 },
     // { headerName: 'Description', field: 'description', sortable: true, filter: true,width:200},
-    { headerName: 'Applied Date', field: 'CreatedOn', sortable: true, filter: true,flex:1},
+    { headerName: 'Applied On ', field: 'appliedOn', sortable: true, filter: true,width:160 ,
+              valueFormatter: (params: ValueFormatterParams): string =>
+                new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
+    },
+    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:160 ,
+      valueFormatter: (params: ValueFormatterParams): string =>
+        new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
+},
     
   ];
 
-  // Define some dummy row data.
-  rowData = Array.from({ length: 60 }, (_, i) => ({
-    no: i + 1,
-    AppliedUser:`User Name${i + 1}`,
-    Email: "username@example.com",
-    JobTittle: `Item 1876887669${i + 1}`,
-    Location: "Kochi",
-    description: `Description for Item ${i + 1}`,
-    CreatedOn: `11-01-2024`,
-    enabled: false // Default to false (disabled)
-  }));
+  rowData:any=[];loading:boolean=false;
+  getApplications(){
+    this.loading=true;
+    this.commonService.getData('/jobs/applications').subscribe({
+      next: (response: any) => {
+        console.log("data , ",response)
+          this.rowData = response;
+          this.loading=false;
+      },
+      error: (error) => {
+        console.error('Error fetching data:', error);
+        this.loading=false;
+      }
+    });
+  }
   
   
 }

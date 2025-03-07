@@ -15,13 +15,13 @@ export class LoginComponent implements OnInit {
   constructor(private commonService: CommonService, private router: Router) {}
 
   ngOnInit(): void {}
-
+loading:boolean=false;
   onSubmit(): void {
     if (!this.email || !this.password) {
       this.errorMessage = 'Please enter both email and password';
       return;
     }
-
+    this.loading=true;
     let data = {
       email: this.email,
       password:this.password
@@ -29,10 +29,12 @@ export class LoginComponent implements OnInit {
     this.commonService.login('/auth/login', data).subscribe(
       (response: any) => {
         localStorage.setItem('token', response.token);
+        this.loading=false;
         this.router.navigate(['/dashboard']);
       },
       (error) => {
         this.errorMessage = 'Invalid credentials. Please try again.';
+         this.loading=false;
       }
     );
     

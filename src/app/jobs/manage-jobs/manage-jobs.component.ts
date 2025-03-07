@@ -29,23 +29,22 @@ export class ManageJobsComponent implements OnInit {
 
   // Define column definitions using the ColDef type for better IntelliSense.
   columnDefs: ColDef[] = [
-    { headerName: 'Edit', field: 'edit', cellRendererFramework: EditActionRendererComponent, width: 80,
+    { headerName: 'Edit', field: 'edit', cellRendererFramework: EditActionRendererComponent, width: 100,
       cellRendererParams: {
         onEdit: this.onEditAction.bind(this), // Pass the method reference
       },
      },
     { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:200 },
-    { headerName: 'Location', field: 'location', sortable: true, filter: true },
+    { headerName: 'Location', field: 'location', sortable: true, filter: true ,width:200 },
     { headerName: 'Description', field: 'description', sortable: true, filter: true,width:300,},
     { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:200 ,
       valueFormatter: (params: ValueFormatterParams): string =>
         new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
     },
-    { headerName: 'Remove', field: 'Remove', cellRendererFramework: RemoveActionRendererComponent, width: 90,
+    { headerName: 'Remove', field: 'Remove', cellRendererFramework: RemoveActionRendererComponent, width: 130,
       cellRendererParams: {
         onDelete: this.onDeleteAction.bind(this), // Pass the method reference
       },
-      flex: 1
      },
   ];
   rowData:any=[];
@@ -111,10 +110,10 @@ export class ManageJobsComponent implements OnInit {
         error: (error) => {
           this.toastr.error(error?.message || 'Something went wrong!', 'Error');
           this.loading=false;
+          this.IsEdit=false;
         }
       
       });
-    // this.IsEdit=false;
   }
 }
   
@@ -143,11 +142,10 @@ export class ManageJobsComponent implements OnInit {
     this.Description=null;
   }
   onDeleteAction(rowData: any) {
+    this.jobId=rowData._id;
     this.onDeleteJob();
   }
   // conf modal 
-
-  
   onDeleteJob(): void {
     this.confirmationService.showConfirmation({
       confType: 'warn',
@@ -157,11 +155,27 @@ export class ManageJobsComponent implements OnInit {
       confSubmit: 'Delete'
     }).subscribe((confirmed) => {
       if (confirmed) {
-        // Perform Job deletion logic here
+        this.loading=true;
+      this.commonService.deleteData('/jobs/delete', { jobId: this.jobId}).subscribe({
+        next: (response) => {
+          if (response?.status === 200) {
+            this.toastr.success('The Job Removed Successfully', 'Success');
+            this.CancelForm();
+            this.getJobs();
+          } 
+          this.loading=false;
+        },
+        error: (error) => {
+          this.toastr.error(error?.message || 'Something went wrong!', 'Error');
+          this.loading=false;
+        }
+      });
+      
         console.log('Job deleted');
       } else {
         console.log('Delete action cancelled');
       }
     });
   }
+  
 }
