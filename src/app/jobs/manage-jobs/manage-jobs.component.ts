@@ -34,14 +34,14 @@ export class ManageJobsComponent implements OnInit {
         onEdit: this.onEditAction.bind(this), // Pass the method reference
       },
      },
-    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:150 },
+    { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:180 },
     { headerName: 'Location', field: 'location', sortable: true, filter: true ,width:150 },
     { headerName: 'Description', field: 'description', sortable: true, filter: true,width:200,},
-    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:150 ,
+    { headerName: 'Posted On ', field: 'createdOn', sortable: true, filter: true,width:170 ,
       valueFormatter: (params: ValueFormatterParams): string =>
         new DatePipe('en-US').transform(params.value, 'dd-MM-yy hh:mm a') ?? '-----',
     },
-    { headerName: 'Remove', field: 'Remove', cellRendererFramework: RemoveActionRendererComponent, width: 80,
+    { headerName: 'Remove', field: 'Remove', cellRendererFramework: RemoveActionRendererComponent, width: 100,
       cellRendererParams: {
         onDelete: this.onDeleteAction.bind(this), // Pass the method reference
       },

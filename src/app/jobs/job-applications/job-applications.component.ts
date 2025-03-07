@@ -28,7 +28,7 @@ export class JobApplicationsComponent implements OnInit {
     valueGetter: (params) => ((params.node?.rowIndex ?? 0) + 1).toString(),
    },
     { headerName: 'Applicant Name', field: 'username', sortable: true, filter: true,width:150},
-    { headerName: 'Email', field: 'email', sortable: true, filter: true,width:150},
+    { headerName: 'Email', field: 'email', sortable: true, filter: true,width:180},
     { headerName: 'Job Name', field: 'jobTitle', sortable: true, filter: true ,width:180 },
     { headerName: 'Location', field: 'location', sortable: true, filter: true,width:150 },
     // { headerName: 'Description', field: 'description', sortable: true, filter: true,width:200},
