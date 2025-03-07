@@ -10,7 +10,11 @@ export class CommonService {
   private apiUrl = 'https://inventoryapi-f3au.onrender.com';
 
   constructor(private http: HttpClient) {}
-
+  
+ // Check if the user is logged in
+ isLoggedIn(): boolean {
+  return !!localStorage.getItem('userData'); // Adjust based on how you store authentication data
+}
   login(url: string, data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}${url}`, data)
       .pipe(catchError(this.handleError));

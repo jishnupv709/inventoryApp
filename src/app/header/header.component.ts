@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,8 @@ export class HeaderComponent implements OnInit {
   isSearchExpanded = false;
   UserData: any=[];
 
-  constructor(private eRef: ElementRef) {}
+  constructor(private eRef: ElementRef,
+      private router: Router,) {}
 
   ngOnInit(): void {
     const storedData = localStorage.getItem('userData');
@@ -40,8 +42,11 @@ export class HeaderComponent implements OnInit {
 
 
   showNotifications = false;
-
   toggleNotifications() {
     this.showNotifications = !this.showNotifications;
+  }
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['/auth/login']);
   }
 }

@@ -1,6 +1,6 @@
 <div class="h-screen bg-gray-900 text-white w-64 flex flex-col fixed">
   <!-- Top Section -->
-  <div class="p-4 text-xl font-bold">Inventory</div>
+  <div class="p-4 text-xl font-bold">Job Portal</div>
 
   <!-- Main Menu -->
   <ul>
@@ -63,7 +63,7 @@
         </a>
     </li> -->
  <!-- jobs-admin -->
- <li>
+ <li *ngIf="UserData.userType==1">
     <div (click)="toggleMenu('jobs-admin')"
         class="flex items-center justify-between px-4 py-3 hover:bg-gray-700 cursor-pointer w-full">
         <span class="flex items-center">
@@ -97,7 +97,7 @@
     </ul>
 </li>
     <!-- jobs-user -->
-    <li>
+    <li *ngIf="UserData.userType==2">
       <div (click)="toggleMenu('jobs')"
           class="flex items-center justify-between px-4 py-3 hover:bg-gray-700 cursor-pointer w-full">
           <span class="flex items-center">

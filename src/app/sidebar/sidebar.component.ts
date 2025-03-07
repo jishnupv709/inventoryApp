@@ -8,8 +8,14 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   openMenu: string | null = null;
+  UserData: any=[];
 
   constructor(private eRef: ElementRef, private router: Router) {}
+  
+  ngOnInit(): void {
+    const storedData = localStorage.getItem('userData');
+    this.UserData = storedData ? JSON.parse(storedData) : null;    
+  }
 
   toggleMenu(menuName: string) {
     this.openMenu = this.openMenu === menuName ? null : menuName;

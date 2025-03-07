@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard'; 
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ItemMasterComponent } from './inventory/item-master/item-master.component';
@@ -14,15 +15,15 @@ import { JobApplicationsComponent } from './jobs/job-applications/job-applicatio
 const routes: Routes = [
   // Redirect the base URL to the login page (within the AuthModule)
   { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'inventory-master', component: ItemMasterComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'inventory-master', component: ItemMasterComponent , canActivate: [AuthGuard]},
   
-  { path: 'manage-jobs', component: ManageJobsComponent },
-  { path: 'apply-jobs', component: ApplyJobsComponent },
-  { path: 'my-jobs', component: MyJobsComponent },
-  { path: 'job-details', component: JobDetailsComponent },
-  { path: 'job-applications', component: JobApplicationsComponent },
+  { path: 'manage-jobs', component: ManageJobsComponent , canActivate: [AuthGuard]},
+  { path: 'apply-jobs', component: ApplyJobsComponent, canActivate: [AuthGuard] },
+  { path: 'my-jobs', component: MyJobsComponent , canActivate: [AuthGuard]},
+  { path: 'job-details', component: JobDetailsComponent , canActivate: [AuthGuard]},
+  { path: 'job-applications', component: JobApplicationsComponent , canActivate: [AuthGuard]},
   
 
   // Lazy-load the AuthModule for all 'auth' routes
