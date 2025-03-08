@@ -50,7 +50,7 @@ export class JobDetailsComponent implements OnInit {
     console.log('Apply clicked for job:', this.jobId);
     this.confirmationService.showConfirmation({
       confType: 'info',
-      confHeader: 'ob Application Submisssion',
+      confHeader: 'Job Application Submisssion',
       confBody: 'Are you sure you want to apply for this Job?',
       confCancel: 'Cancel',
       confSubmit: 'Submit'

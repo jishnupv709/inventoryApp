@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/common.service';
 import { Router } from '@angular/router';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, ColumnApi, GridApi } from 'ag-grid-community';
 import { ToggleRendererComponent } from '../toggle-renderer.component';
 import { EditActionRendererComponent } from '../edit-action-renderer.component';
 import { RemoveActionRendererComponent } from '../remove-action-renderer.component';
@@ -13,6 +13,8 @@ import { ConfirmationService } from 'src/app/confirmation-pop/confirmation.servi
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
+  private gridApi!: GridApi;
+  private gridColumnApi!: ColumnApi;
 
   constructor(
     private commonService: CommonService,
@@ -58,6 +60,20 @@ export class CategoryComponent implements OnInit {
   }));
   
   
+  onGridReady(params: any): void {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
+  }
+
+  // Optional: Resize columns when window resizes
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (this.gridApi) {
+      this.gridApi.sizeColumnsToFit();
+    }
+  }
+
   onToggleChange(event: any, rowIndex: number) {
     this.rowData[rowIndex].enabled = event.checked;
     console.log(`Row ${rowIndex + 1} enabled: ${event.checked}`);

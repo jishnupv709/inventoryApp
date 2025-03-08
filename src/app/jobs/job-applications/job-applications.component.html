@@ -15,7 +15,8 @@ Job Applications
     [rowData]="rowData"
     [pagination]="true"
     [paginationPageSize]="20"
-    [editType]="'fullRow'">
+    [editType]="'fullRow'"
+    (gridReady)="onGridReady($event)">
   </ag-grid-angular>
  
 

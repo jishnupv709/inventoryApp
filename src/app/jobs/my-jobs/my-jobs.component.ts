@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/common.service';
 import { Router } from '@angular/router';
-import { ColDef, ValueFormatterParams } from 'ag-grid-community';
+import { ColDef, ColumnApi, GridApi, ValueFormatterParams } from 'ag-grid-community';
 import { ConfirmationService } from 'src/app/confirmation-pop/confirmation.service';
 import { DatePipe } from '@angular/common';
 
@@ -11,6 +11,8 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./my-jobs.component.css']
 })
 export class MyJobsComponent implements OnInit {
+  private gridApi!: GridApi;
+  private gridColumnApi!: ColumnApi;
 
   constructor(
     private commonService: CommonService,
@@ -36,7 +38,19 @@ export class MyJobsComponent implements OnInit {
     },
     
   ];
+onGridReady(params: any): void {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.gridApi.sizeColumnsToFit();
+  }
 
+  // Optional: Resize columns when window resizes
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (this.gridApi) {
+      this.gridApi.sizeColumnsToFit();
+    }
+  }
   rowData:any=[];loading:boolean=false;
   getMyJobs(){
     this.loading=true;

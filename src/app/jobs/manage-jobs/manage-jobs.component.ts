@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/common.service';
 import { Router } from '@angular/router';
-import { ColDef,ValueFormatterParams } from 'ag-grid-community';
+import { ColDef,ColumnApi,GridApi,ValueFormatterParams } from 'ag-grid-community';
 import { ToggleRendererComponent } from 'src/app/inventory/toggle-renderer.component';
 import { EditActionRendererComponent } from 'src/app/inventory/edit-action-renderer.component';
 import { RemoveActionRendererComponent } from 'src/app/inventory/remove-action-renderer.component';
@@ -15,6 +15,8 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./manage-jobs.component.css']
 })
 export class ManageJobsComponent implements OnInit {
+  private gridApi!: GridApi;
+  private gridColumnApi!: ColumnApi;
 
   constructor(
     private commonService: CommonService,
@@ -47,6 +49,19 @@ export class ManageJobsComponent implements OnInit {
       },
      },
   ];
+  onGridReady(params: any): void {
+      this.gridApi = params.api;
+      this.gridColumnApi = params.columnApi;
+      this.gridApi.sizeColumnsToFit();
+    }
+  
+    // Optional: Resize columns when window resizes
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      if (this.gridApi) {
+        this.gridApi.sizeColumnsToFit();
+      }
+    }
   rowData:any=[];
   getJobs(){
     this.loading=true;
