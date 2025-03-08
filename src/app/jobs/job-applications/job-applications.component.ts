@@ -45,19 +45,19 @@ export class JobApplicationsComponent implements OnInit {
     
   ];
 
-    onGridReady(params: any): void {
-        this.gridApi = params.api;
-        this.gridColumnApi = params.columnApi;
-        this.gridApi.sizeColumnsToFit();
-      }
+    // onGridReady(params: any): void {
+    //     this.gridApi = params.api;
+    //     this.gridColumnApi = params.columnApi;
+    //     this.gridApi.sizeColumnsToFit();
+    //   }
     
-      // Optional: Resize columns when window resizes
-      @HostListener('window:resize', ['$event'])
-      onResize() {
-        if (this.gridApi) {
-          this.gridApi.sizeColumnsToFit();
-        }
-      }
+    //   // Optional: Resize columns when window resizes
+    //   @HostListener('window:resize', ['$event'])
+    //   onResize() {
+    //     if (this.gridApi) {
+    //       this.gridApi.sizeColumnsToFit();
+    //     }
+    //   }
 
   rowData:any=[];loading:boolean=false;
   getApplications(){
